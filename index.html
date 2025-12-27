@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>קול המערכת | חדשות, עומק ופרשנות</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#020617;
+  --panel:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+  --accent:#2563eb;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Segoe UI,sans-serif}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* HEADER */
+header{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(2,6,23,.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 26px;
+}
+.logo{display:flex;align-items:center;gap:12px;font-weight:700}
+.logo img{width:36px}
+nav a{
+  margin:0 14px;color:#cbd5f5;text-decoration:none;
+  font-size:14px;position:relative
+}
+nav a::after{
+  content:'';position:absolute;bottom:-6px;right:0;
+  width:0;height:2px;background:var(--accent);transition:.3s
+}
+nav a:hover::after{width:100%}
+
+/* BREAKING */
+.breaking{
+  background:linear-gradient(90deg,#1e3a8a,#2563eb);
+  padding:10px 20px;font-size:14px
+}
+
+/* HERO SLIDER */
+.hero{
+  position:relative;height:75vh;overflow:hidden
+}
+.slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1s
+}
+.slide.active{opacity:1}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,#020617ee,transparent 60%)
+}
+.hero-content{
+  position:absolute;bottom:60px;right:40px;
+  max-width:600px
+}
+.hero-content h1{font-size:48px;line-height:1.2}
+.hero-content p{margin-top:14px;color:#c7d2fe;font-size:18px}
+
+/* MAIN */
+main{
+  display:grid;grid-template-columns:3fr 1.3fr;
+  gap:40px;padding:50px 30px
+}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+
+/* FEATURED */
+.featured{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;
+  transition:.3s;opacity:0;transform:translateY(40px)
+}
+.card.visible{opacity:1;transform:none}
+.card img{width:100%;height:220px;object-fit:cover}
+.card .content{padding:20px}
+.card h3{font-size:20px;margin-bottom:8px}
+.card p{color:var(--muted);font-size:15px}
+
+/* ARTICLES */
+.article{
+  margin-top:40px;
+  padding:30px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:var(--panel)
+}
+.article h2{font-size:26px}
+.article p{margin-top:16px;line-height:1.8}
+
+/* SIDEBAR */
+aside{position:sticky;top:110px;height:max-content}
+.box{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;margin-bottom:28px
+}
+.box h4{margin-bottom:14px}
+.box a{color:#93c5fd;text-decoration:none;font-size:14px}
+
+/* GALLERY */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:10px
+}
+.gallery img{
+  width:100%;height:100px;object-fit:cover;
+  border-radius:10px
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 30px;color:var(--muted);font-size:14px
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Israel.svg">
+      <span>קול המערכת</span>
+    </div>
+    <nav>
+      <a href="#">חדשות</a>
+      <a href="#">פרשנות</a>
+      <a href="#">ביטחון</a>
+      <a href="#">עולם</a>
+    </nav>
+  </div>
+</header>
+
+<div class="breaking">
+  עדכון מערכת: מציאות אזורית מורכבת מחייבת דיווח אחראי וזהיר
+</div>
+
+<section class="hero">
+  <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1601134467661-3d775b999c8b')"></div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1581091870627-3a6e0c48a4b9')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>דיווח, פרשנות ואחריות בעידן של קיטוב</h1>
+    <p>האתגר של עיתונות אינו רק מה לספר – אלא איך.</p>
+  </div>
+</section>
+
+<main>
+<section>
+  <div class="featured">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d">
+      <div class="content">
+        <h3>הזווית האנושית מאחורי הכותרות</h3>
+        <p>בין דיווחים רשמיים למציאות מורכבת בשטח.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1555848962-6e79363ec58f">
+      <div class="content">
+        <h3>שיח ציבורי מול קבלת החלטות</h3>
+        <p>פערי תפיסה בין רשתות חברתיות למציאות ביטחונית.</p>
+      </div>
+    </div>
+  </div>
+
+  <article class="article">
+    <h2>המורכבות שלא נכנסת לציוץ</h2>
+    <p>
+      אזורים מוכי עימות אינם מתנהלים לפי נרטיב אחד.
+      תפקידה של עיתונות אחראית הוא להציג עומק,
+      גם כשהמציאות אינה נוחה או חד־משמעית.
+    </p>
+  </article>
+</section>
+
+<aside>
+  <div class="box">
+    <h4>מקורות בינלאומיים</h4>
+    <a href="https://www.reuters.com" target="_blank">Reuters</a><br>
+    <a href="https://www.bbc.com/news" target="_blank">BBC News</a><br>
+    <a href="https://www.nytimes.com" target="_blank">New York Times</a>
+  </div>
+
+  <div class="box">
+    <h4>גלריה</h4>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba">
+      <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da">
+      <img src="https://images.unsplash.com/photo-1587502537745-84c9b8bb4bb6">
+      <img src="https://images.unsplash.com/photo-1602080858428-57174f9431cf">
+    </div>
+  </div>
+</aside>
+</main>
+
+<footer>
+© 2025 קול המערכת – אתר חדשות ופרשנות עצמאי
+</footer>
+
+<script>
+let slides=document.querySelectorAll('.slide'),i=0;
+setInterval(()=>{
+  slides[i].classList.remove('active');
+  i=(i+1)%slides.length;
+  slides[i].classList.add('active');
+},5000);
+
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add('visible'))
+});
+document.querySelectorAll('.card').forEach(c=>obs.observe(c));
+</script>
+
+</body>
+</html>
