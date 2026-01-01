@@ -1,184 +1,115 @@
+
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Aynı Anda, Aynı Yerde</title>
+<title>SYSTEM OVERRIDDEN</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
 <style>
-body{
-  margin:0;
-  background:#000;
-  color:#eee;
-  font-family:Arial, sans-serif;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+/* =========================
+   BASE
+========================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  color: #b30000;
+  font-family: "Courier New", monospace;
 }
-.screen{display:none;text-align:center;max-width:500px;}
-.screen.active{display:block;}
-button{padding:14px 22px;margin:8px;font-size:22px;cursor:pointer}
-input{padding:10px;font-size:18px}
-.timer{font-size:28px;margin-top:15px}
-.dark{animation:dark 3s infinite alternate}
-@keyframes dark{from{opacity:.4}to{opacity:1}}
+
+/* =========================
+   CENTER LAYOUT
+========================= */
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* =========================
+   TEXT
+========================= */
+.title {
+  font-size: clamp(20px, 5vw, 50px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: #ff0000;
+}
+
+.subtitle {
+  margin-top: 16px;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: #990000;
+}
+
+/* =========================
+   IMAGES
+========================= */
+.image-block {
+  margin-top: 32px;
+  max-width: 460px;
+  width: 100%;
+  border: 2px solid #660000;
+  background: #050505;
+}
+
+.image-block img {
+  width: 100%;
+  display: block;
+}
+
+/* second image spacing */
+.image-block.secondary {
+  margin-top: 22px;
+}
+
+/* =========================
+   FOOT NOTE
+========================= */
+.note {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #550000;
+  opacity: 0.7;
+}
 </style>
 </head>
 
 <body>
 
-<div id="lobby" class="screen active">
-  <h1>Aynı Anda, Aynı Yerde</h1>
-  <button onclick="createRoom()">Oda Oluştur</button><br><br>
-  <input id="roomInput" placeholder="Oda Kodu">
-  <button onclick="joinRoom()">Odaya Katıl</button>
+<div class="wrapper">
+
+  <div class="title">
+   THE WEB SITE HAS BEEN SHUT DOWN. YOU DON'T HAVE TO BE MUSLIM TO SAY "STOP" TO GENOCIDE.
+  </div>
+
+  <div class="subtitle">
+    OREMAR
+  </div>
+
+  <!-- FIRST IMAGE -->
+  <div class="image-block">
+    <img src="cyxares.png" alt="Defacement Art Image 1">
+  </div>
+
+  <!-- SECOND IMAGE -->
+  <div class="image-block secondary">
+    <img src="oremar.png" alt="Defacement Art Image 2">
+  </div>
+
+  <div class="note">
+    FREE PALESTINE
+  </div>
+
 </div>
-
-<div id="room" class="screen">
-  <h2>Oda</h2>
-  <code id="roomCode"></code>
-  <p>Bekleniyor...</p>
-</div>
-
-<div id="chapter4" class="screen dark">
-  <h2>Sessizlik</h2>
-  <p>Kelimeler yok. Sadece hisler.</p>
-  <button onclick="choose('close')">🙂</button>
-  <button onclick="choose('neutral')">😐</button>
-  <button onclick="choose('away')">🙁</button>
-  <div class="timer" id="t4">10</div>
-</div>
-
-<div id="lost" class="screen">
-  <h2>Bağlantı Koptu</h2>
-</div>
-
-<script>
-/* === FIREBASE CONFIG === */
-const firebaseConfig = {
-  apiKey: "AIzaSyCW9YMZh0C3yQHMZG6PjFVgiKlKETxV7xM",
-  authDomain: "evsann.firebaseapp.com",
-  databaseURL: "https://evsann-default-rtdb.firebaseio.com",
-  projectId: "evsann",
-  storageBucket: "evsann.appspot.com",
-  messagingSenderId: "1013708332512",
-  appId: "1:1013708332512:web:33d58945364546c3341f85"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-/* === GLOBAL === */
-let roomId;
-let playerId = Math.random().toString(36).substr(2,9);
-let roomRef, stateRef, playersRef;
-let localTimer = null;
-
-/* === UI === */
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-/* === ROOM === */
-function createRoom(){
-  roomId = Math.random().toString(36).substr(2,5).toUpperCase();
-  roomRef = db.ref("rooms/"+roomId);
-  roomRef.set({
-    state:{ phase:"chapter4", timer:10, running:true },
-    players:{ [playerId]:{ choice:null, bond:0 } }
-  });
-  enterRoom();
-}
-
-function joinRoom(){
-  roomId = document.getElementById("roomInput").value.trim().toUpperCase();
-  if(!roomId) return;
-  roomRef = db.ref("rooms/"+roomId);
-  roomRef.child("players/"+playerId).set({ choice:null, bond:0 });
-  enterRoom();
-}
-
-function enterRoom(){
-  show("room");
-  document.getElementById("roomCode").innerText = roomId;
-
-  stateRef = roomRef.child("state");
-  playersRef = roomRef.child("players");
-
-  roomRef.on("value", snap=>{
-    if(!snap.exists()) return show("lost");
-    const d = snap.val();
-    if(d.state.phase==="chapter4") startChapter4();
-  });
-
-  roomRef.child("players/"+playerId).onDisconnect().remove();
-}
-
-/* === CHAPTER 4 === */
-function startChapter4(){
-  show("chapter4");
-
-  stateRef.child("timer").on("value", s=>{
-    document.getElementById("t4").innerText = s.val();
-  });
-
-  stateRef.once("value", s=>{
-    if(s.val().running) runTimer();
-  });
-
-  playersRef.on("value", s=>{
-    const players = s.val()||{};
-    const choices = Object.values(players).map(p=>p.choice).filter(Boolean);
-    if(choices.length===2) resolveChapter4(choices);
-  });
-}
-
-function runTimer(){
-  if(localTimer) return;
-  localTimer = setInterval(()=>{
-    stateRef.transaction(st=>{
-      if(!st || !st.running) return st;
-      st.timer--;
-      if(st.timer<=0) st.running=false;
-      return st;
-    });
-  },1000);
-}
-
-function choose(val){
-  playersRef.child(playerId+"/choice").set(val);
-}
-
-/* === RESOLVE === */
-function resolveChapter4(choices){
-  clearInterval(localTimer);
-  localTimer=null;
-  stateRef.update({ running:false });
-
-  let bond = 0;
-  if(choices[0]==="close" && choices[1]==="close") bond=3;
-  else if(choices.includes("close") && choices.includes("neutral")) bond=1;
-  else if(choices.includes("away")) bond=-2;
-
-  playersRef.once("value", snap=>{
-    snap.forEach(p=>{
-      playersRef.child(p.key+"/bond")
-        .set((p.val().bond||0)+bond);
-      playersRef.child(p.key+"/choice").set(null);
-    });
-  });
-
-  setTimeout(()=>{
-    alert("Sessizlik bitti. Oyun devam edecek.");
-    // BURADAN SONRA YENİ BÖLÜMLER EKLENECEK
-  },500);
-}
-</script>
 
 </body>
 </html>
